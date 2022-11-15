@@ -6,7 +6,7 @@ global muPosTime;
 global dt;
 updatePos = [0 0 0];
 
-if(pozyxInput.size() > 1.9/dt)
+if(pozyxInput.size() > 1/dt)%1.9
     timeFromNow = normrnd(muPosTime, sigmaPosTime);
     queue = elements(pozyxInput);
     index = int8(timeFromNow/dt);

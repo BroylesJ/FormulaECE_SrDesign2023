@@ -18,14 +18,16 @@ function U = controlLine(X_bar)
     
     D = inv(R) * [X_bar(1:2);1];
     v = 2;
-    kp = -0.4;
+    kp = -.4;
     kd = -.5;
     deriv = (D(2)-oldD)/dt;
+   % disp(deriv)
     
     %set the steering angle with PD controller to steer towards line
     thetaS = D(2)*kp + kd*deriv;
     Acc = 0.2; %m/s/s
     U(1) = v; %velocity
+    disp(thetaS)
     U(2) = thetaS; 
     oldD = D(2);
 end

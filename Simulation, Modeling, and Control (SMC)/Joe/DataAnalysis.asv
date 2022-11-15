@@ -1,0 +1,43 @@
+%clean up the workspace
+clear
+clf
+%create the dataset.  independent x and y with a std dev of 2
+% std_dev = 2; %cm
+% mu = [2,3];
+% N = 100;
+% xS = normrnd(mu(1), std_dev, [1, N])
+% yS = normrnd(mu(2), std_dev, [1, N])
+xS = input(:,1) %f
+yS = input(:,2)
+%Plot the data
+hold on
+    poolXLims = [0 12]';
+    poolYLims = [0 13]';
+%     poolXLims = [0 20]';
+%     poolYLims = [0 20]';
+    rampXLims = [0 4]';
+    rampYLims = [11 13]';
+    %Draw the pool area
+
+    hold on
+        plot([poolXLims(1), poolXLims(1), poolXLims(2), poolXLims(2), poolXLims(1)], ...
+        [poolYLims(1), poolYLims(2), poolYLims(2), poolYLims(1), poolYLims(1)], 'b' , 'LineWidth', 3)
+    %Draw the ramp
+plot(xS, yS, 'b+')
+hold on
+%package the data
+sensorVals = [xS; yS]
+%Calculate the mean
+calcxmu = mean(xS);
+calcymu = mean(yS);
+%calculate the std_dev
+calcSx = sqrt(sum((xS - calcxmu).^2)/(N-1));
+calcSy = sqrt(sum((yS - calcymu).^2)/(N-1));
+%calculate the average of the calculated std_devs
+calcSxy = (calcSx + calcSy)/2;
+%draw a circle around the data set for plotting purposes
+theta = linspace(0, 2*pi, 100);
+%The circle has a radius of 2 std deviations
+xpl = 2* calcSxy * cos(theta) + calcxmu;
+ypl = 2 * calcSxy * sin(theta) + calcymu;
+plot(xpl, ypl, 'r')

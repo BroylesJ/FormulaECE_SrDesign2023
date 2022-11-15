@@ -18,7 +18,7 @@ if(isempty(Ubar_hold))
 end
 
 driveCurve = U_bar(1);
-steerCurve = rad2deg(U_bar(2))
+steerCurve = rad2deg(U_bar(2));
 
 while(steerCurve < -180 || steerCurve > 180)
     if(steerCurve < -180)
@@ -64,7 +64,7 @@ if(((driveCurvePWM >= 78) && (driveCurvePWM <= 84)) && ((steerCurvePWM <= 88) &&
 
 else
     U = [0 0];
-    print('An error occured in motor model. U_bar = %d: %d' + driveCurve + steerCurve);
+   % print('An error occured in motor model. U_bar = %d: %d' + driveCurve + steerCurve);
 end
 
 if(includeUncertainty)
@@ -73,7 +73,7 @@ if(includeUncertainty)
         uncert(2) = normrnd(0, sigmaSteering);
     end
 end
-rad2deg(U(2))
+rad2deg(U(2));
 U = U + uncert;
 Ubar_hold = U_bar;
 PWMtoSend = [driveCurvePWM, steerCurvePWM];

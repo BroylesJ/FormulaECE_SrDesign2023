@@ -10,7 +10,7 @@ function U = controlCircle(X_bar, resetIntegral)
     persistent integralPlot;
     persistent t;
 
-    plotting = true;
+    plotting = false;
 
     if(plotting)
         if(isempty(t))
@@ -20,13 +20,13 @@ function U = controlCircle(X_bar, resetIntegral)
     
     if(isempty(oldD))
         oldD = 0;
-        integralFactor = .33;%0
+        integralFactor = .5;%0
     end
 
     if(resetIntegral == 1)
-        integralFactor = 0;
+        integralFactor = .5;
     end
-
+    disp(integralFactor)
     x = X_bar(1);
     y = X_bar(2);
     thetaC = X_bar(3);
@@ -37,23 +37,23 @@ function U = controlCircle(X_bar, resetIntegral)
     Rcar = norm(center - [x;y]);
 
     error = Rcar - Rcirc;
-    
-    if(controlIndex == 14)
-        ki = 0.0004;
-    elseif(controlIndex == 7)
-        ki = 0.0002;
-    else
-        %ki = 0.00035;
-        ki = 0.5;
-    end
-
+    %disp(error)
+%     if(controlIndex == 14)
+%         ki = 0.0004;
+%     elseif(controlIndex == 7)
+%         ki = 0.0002;
+%     else
+%         %ki = 0.00035;
+%         ki = 0.5;
+%     end
+       ki = .2 ;%.6
     if(lambda == 0)
-        kp = -0.4;
-        kd = -.5;
-        ki = -ki;
+        kp = -.5;
+        kd = -.2;%.8
+       
     else
-        kp = 0.4;
-        kd = .5;
+        kp = .5;
+        kd = .2;
     end
 
     if(resetIntegral == 1)
@@ -67,7 +67,7 @@ function U = controlCircle(X_bar, resetIntegral)
     U(1) = velocity; %velocity
     U(2) = thetaS; 
     oldD = error;
-    integralFactor = integralFactor + error*dt
+    integralFactor = integralFactor + error*dt;
 
     if(plotting)
         if t == 0
